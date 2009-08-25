@@ -3,7 +3,7 @@ Author: Steven Vachon
 URL: http://www.svachon.com/
 Contact: prometh@gmail.com
 Contributors: prometh, mandar-marathe
-Tags: comment, compress, compression, html, template, space
+Tags: compress, compression, html, template, space, comment, comment
 Requires at least: 2.8.4
 Tested up to: 2.8.4
 Stable tag: trunk
@@ -15,9 +15,9 @@ Reduce file size by safely removing all standard comments and unnecessary white 
 
 Combining HTML compression with cache and HTTP compression can save you a lot of bandwidth.
 
-With this plugin, you can compress your HTML by removing comments, new lines, carriage returns, tabs and excess spaces. More importantly, all this can be done without worrying about &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags causing issues.
+With this plugin, you can compress your HTML by removing standard comments, new lines, carriage returns, tabs and excess spaces. More importantly, all this can be done without worrying about &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags causing issues.
 
-Development of this plugin started with the intent to update **[WP-Compress-HTML](http://wordpress.org/extend/plugins/wp-compress-html/)**. Although it was soon realized that to achieve what was required, the whole thing needed to be rewritten. Backwards compatibility with WP-Compress-HTML's compression override was also broken.
+Development of this plugin started with the intent of updating **[WP-Compress-HTML](http://wordpress.org/extend/plugins/wp-compress-html/)**. Although it was soon realized that to achieve what was required, the whole thing needed to be rewritten. Backwards compatibility with WP-Compress-HTML's compression override was also broken.
 
 
 == Installation ==
