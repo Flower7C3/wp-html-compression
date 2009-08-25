@@ -51,8 +51,8 @@ This plugin has only been tested with version of WordPress as early as 2.8.4. Fo
 
 == Screenshots ==
 
-1. This is what HTML looks like after being compressed with WP-HTML-Compression.
-2. This is what the same HTML from the above screenshot looked like prior to compression.
+1. This is what the XHTML looks like after being compressed with WP-HTML-Compression.
+2. This is what the same XHTML from the above screenshot looked like prior to compression.
 3. This is an example of how to use the compression override.
 
 
