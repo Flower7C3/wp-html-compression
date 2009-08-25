@@ -34,7 +34,7 @@ Yes. Use **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)
 
 = Will Internet Explorer conditional comments be removed? =
 
-No. :)
+No. :-)
 
 = How do I mark areas that should not be compressed? =
 
@@ -42,11 +42,11 @@ While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically le
 
 = I'd like to compress the contents of &lt;script&gt; tags. Can I do this? =
 
-Until an admin panel is created, you'll have to edit the file from the "Plugins" menu in the WordPress admin. Look for the $compress_js variable and set it to true.
+Until a settings page is created, you'll have to edit the file from the "Plugins" menu in the WordPress admin. Look for the $compress_js variable and set it to true.
 
 = Will this work for WordPress version x.x.x? =
 
-This plugin has only been tested with version of WordPress as early as 2.8.4. For anything older, you'll have to see for yourself.
+This plugin has only been tested with versions of WordPress as early as 2.8.4. For anything older, you'll have to see for yourself.
 
 
 == Screenshots ==
