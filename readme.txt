@@ -28,7 +28,7 @@ Development of this plugin started with the intent to update **[WP-Compress-HTML
 
 == Frequently Asked Questions ==
 
-= Will this plu gin slow my page load ing times? =
+= Will this plugin slow my page loading times? =
 
 Yes. Use **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**.
 
