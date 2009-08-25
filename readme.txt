@@ -6,7 +6,7 @@ Contributors: prometh, mandar-marathe
 Tags: compress, compression, html, template, space, comment, comment
 Requires at least: 2.8.4
 Tested up to: 2.8.4
-Stable tag: 0.1
+Stable tag: trunk
 
 Reduce file size by safely removing all standard comments and unnecessary white space from an HTML document.
 
