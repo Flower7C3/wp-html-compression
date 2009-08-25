@@ -17,7 +17,7 @@ Combining HTML compression with cache and HTTP compression will cut down your ba
 
 With this plugin, you can compress your HTML by removing standard comments, new lines, carriage returns, tabs and excess spaces. More importantly, all this can be done without worrying about &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags causing issues.
 
-Development of this plugin started with the intent of updating **[WP-Compress-HTML](http://wordpress.org/extend/plugins/wp-compress-html/)**. Although it was soon realized that to achieve what was required, the whole thing needed to be rewritten. Backwards compatibility with WP-Compress-HTML's compression override was also broken.
+Development of this plugin started with the intent of updating **[WP-Compress-HTML](http://wordpress.org/extend/plugins/wp-compress-html/)**. Although it was soon realized that to achieve what was required, the whole thing needed to be rewritten. Backwards compatibility with WP-Compress-HTML's compression override was also broken. I included the WP-Compress-HTML developer as a co-author for this plugin because I used a couple of his ideas.
 
 
 == Installation ==
