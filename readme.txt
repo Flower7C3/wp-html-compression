@@ -3,7 +3,7 @@ Author: Steven Vachon
 URL: http://www.svachon.com/
 Contact: prometh@gmail.com
 Contributors: prometh, mandar-marathe
-Tags: compress, compression, html, template, space, comment, comment
+Tags: comment, comments, compress, compression, html, space, template
 Requires at least: 2.8.4
 Tested up to: 2.8.4
 Stable tag: trunk
@@ -57,6 +57,9 @@ This plugin has only been tested with versions of WordPress as early as 2.8.4. F
 
 
 == Changelog ==
+
+= 0.2 =
+* Fixed compression override. It was set up for &lt;!--wp-compress-html no compression--&gt; instead of &lt;!--wp-html-compression no compression--&gt;.
 
 = 0.1 =
 * Initial release
