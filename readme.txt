@@ -3,7 +3,7 @@ Author: Steven Vachon
 URL: http://www.svachon.com/
 Contact: prometh@gmail.com
 Contributors: prometh, mandar-marathe
-Tags: comment, comments, compress, compression, html, space, template
+Tags: comment, comments, compress, compression, html, minify, space, template
 Requires at least: 2.8.4
 Tested up to: 2.8.4
 Stable tag: trunk
@@ -30,7 +30,7 @@ Development of this plugin started with the intent of updating **[WP-Compress-HT
 
 = Will this plugin slow my page loading times? =
 
-Yes. Use **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**.
+Yes, slightly. Use **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**.
 
 = Will Internet Explorer conditional comments be removed? =
 
