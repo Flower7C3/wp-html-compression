@@ -5,7 +5,7 @@ Contact: prometh@gmail.com
 Contributors: prometh, mandar-marathe
 Tags: comment, comments, compress, compression, html, minify, space, template
 Requires at least: 2.8.4
-Tested up to: 2.8.4
+Tested up to: 2.8.5
 Stable tag: trunk
 
 Reduce file size by safely removing all standard comments and unnecessary white space from an HTML document.
