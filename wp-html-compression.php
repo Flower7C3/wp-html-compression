@@ -3,30 +3,65 @@
 Plugin Name: WP-HTML-Compression
 Plugin URI: http://www.svachon.com/wp-html-compression/
 Description: Reduce file size by safely removing all standard comments and unnecessary white space from an HTML document.
-Version: 0.2
+Version: 0.3
 Author: Steven Vachon
 Author URI: http://www.svachon.com/
 Author Email: prometh@gmail.com
 */
 
-function wp_html_compression()
+class WP_HTML_Compression
 {
-	function wp_html_compression_main($buffer)
+	// Settings
+	protected $compress_css = true;
+	protected $compress_js = false;
+	protected $info_comment = true;
+	protected $remove_comments = true;
+	
+	// Variables
+	protected $html;
+	
+	
+	public function __construct($html)
 	{
-		$compress_css = true;
-		$compress_js = false;
-		$remove_comments = true;
+		if (!empty($html))
+		{
+			$this->parseHTML($html);
+		}
+	}
+	
+	
+	public function __toString()
+	{
+		return $this->html;
+	}
+	
+	
+	protected function bottomComment($raw, $compressed)
+	{
+		$raw = strlen($raw);
+		$compressed = strlen($compressed);
 		
-		$initial = strlen($buffer);
+		$savings = ($raw-$compressed) / $raw * 100;
 		
+		$savings = round($savings, 2);
+		
+		return '<!--WP-HTML-Compression crunched this document by '.$savings.'%. The file was '.$raw.' bytes, but is now '.$compressed.' bytes-->';
+	}
+	
+	
+	protected function minifyHTML($html)
+	{
 		$pattern = '/<(?<script>script).*?<\/script\s*>|<(?<style>style).*?<\/style\s*>|<!(?<comment>--).*?-->|<(?<tag>[\/\w.:-]*)(?:".*?"|\'.*?\'|[^\'">]+)*>|(?<text>((<[^!\/\w.:-])?[^<]*)+)|/si';
 		
-		preg_match_all($pattern, $buffer, $len, PREG_SET_ORDER);
+		preg_match_all($pattern, $html, $matches, PREG_SET_ORDER);
 		
 		$overriding = false;
 		$raw_tag = false;
 		
-		foreach ($len as $token)
+		// Variable reused for output
+		$html = '';
+		
+		foreach ($matches as $token)
 		{
 			$tag = (isset($token['tag'])) ? strtolower($token['tag']) : null;
 			
@@ -34,13 +69,13 @@ function wp_html_compression()
 			
 			if (is_null($tag))
 			{
-				if ($token['script'] != '')
+				if ( !empty($token['script']) )
 				{
-					$strip = $compress_js;
+					$strip = $this->compress_js;
 				}
-				else if ($token['style'] != '')
+				else if ( !empty($token['style']) )
 				{
-					$strip = $compress_css;
+					$strip = $this->compress_css;
 				}
 				else if ($content == '<!--wp-html-compression no compression-->')
 				{
@@ -49,12 +84,20 @@ function wp_html_compression()
 					// Don't print the comment
 					continue;
 				}
+				else if ($this->remove_comments)
+				{
+					if (!$overriding && $raw_tag != 'textarea')
+					{
+						// Remove any HTML comments, except MSIE conditional comments
+						$content = preg_replace('/<!--(?!\s*(?:\[if [^\]]+]|<!|>))(?:(?!-->).)*-->/s', '', $content);
+					}
+				}
 			}
 			else
 			{
 				if ($tag == 'pre' || $tag == 'textarea')
 				{
-					$raw_tag = true;
+					$raw_tag = $tag;
 				}
 				else if ($tag == '/pre' || $tag == '/textarea')
 				{
@@ -69,38 +112,64 @@ function wp_html_compression()
 					else
 					{
 						$strip = true;
+						
+						// Remove any space before the end of self-closing XHTML tags
+						// JavaScript excluded
+						$content = str_replace(' />',  '/>', $content);
 					}
 				}
 			}
 			
 			if ($strip)
 			{
-				$content = str_replace("\t", ' ', $content);
-				$content = str_replace("\n",  '', $content);
-				$content = str_replace("\r",  '', $content);
-				
-				while (stristr($content, '  '))
-				{
-					$content = str_replace('  ', ' ', $content);
-				}
+				$content = $this->removeWhiteSpace($content);
 			}
 			
-			$buffer_out .= $content;
+			$html .= $content;
 		}
 		
-		// Remove all HTML comments, except MSIE conditional comments
-		$buffer_out = preg_replace('/<!--(?!\s*(?:\[if [^\]]+]|<!|>))(?:(?!-->).)*-->/', '', $buffer_out);
-		
-		$final = strlen($buffer_out);
-		$savings = ($initial-$final)/$initial*100;
-		$savings = round($savings, 2);
-		$buffer_out .= "\n<!--WP-HTML-Compression crunched this document by $savings%. The file was $initial bytes, but is now $final bytes-->";
-		
-		return $buffer_out;
+		return $html;
 	}
 	
-	ob_start('wp_html_compression_main');
+	
+	public function parseHTML($html)
+	{
+		$this->html = $this->minifyHTML($html);
+		
+		if ($this->info_comment)
+		{
+			$this->html .= "\n" . $this->bottomComment($html, $this->html);
+		}
+	}
+	
+	
+	protected function removeWhiteSpace($str)
+	{
+		$str = str_replace("\t", ' ', $str);
+		$str = str_replace("\n",  '', $str);
+		$str = str_replace("\r",  '', $str);
+		
+		while (stristr($str, '  '))
+		{
+			$str = str_replace('  ', ' ', $str);
+		}
+		
+		return $str;
+	}
 }
 
-add_action('get_header', 'wp_html_compression');
+
+function wp_html_compression_finish($html)
+{
+	return new WP_HTML_Compression($html);
+}
+
+
+function wp_html_compression_start()
+{
+	ob_start('wp_html_compression_finish');
+}
+
+
+add_action('get_header', 'wp_html_compression_start');
 ?>

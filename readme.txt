@@ -13,11 +13,11 @@ Reduce file size by safely removing all standard comments and unnecessary white 
 
 == Description ==
 
-Combining HTML compression with cache and HTTP compression will cut down your bandwidth.
+Combining HTML compression with cache and HTTP compression will cut down your bandwidth and ensure near-immediate content delivery.
 
-With this plugin, you can compress your HTML by removing standard comments, new lines, carriage returns, tabs and excess spaces. More importantly, all this can be done without worrying about &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags causing issues.
+With this plugin, you can compress your HTML by removing standard comments, new lines, carriage returns, tabs and excess spaces. More importantly, all this can be done without &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tag issues.
 
-Development of this plugin started with the intent of updating **[WP-Compress-HTML](http://wordpress.org/extend/plugins/wp-compress-html/)**. Although it was soon realized that to achieve what was required, the whole thing needed to be rewritten. Backwards compatibility with WP-Compress-HTML's compression override was also broken. I included the WP-Compress-HTML developer as a co-author for this plugin because I used a couple of his ideas.
+Development of this plugin started with the intent of updating **[WP-Compress-HTML](http://wordpress.org/extend/plugins/wp-compress-html/)**. Although it was soon realized that to achieve what was required, the whole thing needed to be rewritten. Backwards compatibility with WP-Compress-HTML's compression override was also broken. The WP-Compress-HTML developer was included as a co-author for this plugin because a couple of his ideas were used.
 
 
 == Installation ==
@@ -44,6 +44,10 @@ While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically le
 
 Until a settings page is created, you'll have to edit the file from the "Plugins" menu in the WordPress admin. Look for the $compress_js variable and set it to true.
 
+= Are you or have you thought of using HTML Tidy? =
+
+Since not every WordPress server supports the installation of PHP extensions, this plugin does not currently make use of HTML Tidy. However, future releases might.
+
 = Will this work for WordPress version x.x.x? =
 
 This plugin has only been tested with versions of WordPress as early as 2.8.4. For anything older, you'll have to see for yourself.
@@ -57,6 +61,10 @@ This plugin has only been tested with versions of WordPress as early as 2.8.4. F
 
 
 == Changelog ==
+
+= 0.3 =
+* Replaces " /&gt;" with "/&gt;" on BR, HR, IMG and INPUT tags
+* Various bug fixes and optimizations
 
 = 0.2 =
 * Fixed compression override. It was set up for &lt;!--wp-compress-html no compression--&gt; instead of &lt;!--wp-html-compression no compression--&gt;.
