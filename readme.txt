@@ -5,7 +5,7 @@ Contact: prometh@gmail.com
 Contributors: prometh, mandar-marathe
 Tags: comment, comments, compress, compression, html, minify, space, template
 Requires at least: 2.8.4
-Tested up to: 2.8.5
+Tested up to: 2.9
 Stable tag: trunk
 
 Reduce file size by safely removing all standard comments and unnecessary white space from an HTML document.
@@ -63,11 +63,12 @@ This plugin has only been tested with versions of WordPress as early as 2.8.4. F
 == Changelog ==
 
 = 0.3 =
+* Comments in &gt;textarea&lt; are no longer removed. Browsers seem to display such text
 * Replaces " /&gt;" with "/&gt;" on BR, HR, IMG and INPUT tags
-* Various bug fixes and optimizations
+* Speed optimizations
 
 = 0.2 =
-* Fixed compression override. It was set up for &lt;!--wp-compress-html no compression--&gt; instead of &lt;!--wp-html-compression no compression--&gt;.
+* Fixed compression override
 
 = 0.1 =
 * Initial release
