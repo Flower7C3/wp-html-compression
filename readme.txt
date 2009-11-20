@@ -63,8 +63,8 @@ This plugin has only been tested with versions of WordPress as early as 2.8.4. F
 == Changelog ==
 
 = 0.3 =
-* Comments in &gt;textarea&lt; are no longer removed. Browsers seem to display such text
-* Removes excess spacing within &gt;br/&lt;, &gt;hr/&lt;, &gt;img/&lt; and &gt;input/&lt; tags
+* Comments in &lt;textarea&gt; are no longer removed. Browsers seem to display such text
+* Removes excess spacing within &lt;br/&gt;, &lt;hr/&gt;, &lt;img/&gt; and &lt;input/&gt; tags
 * Speed optimizations
 
 = 0.2 =
