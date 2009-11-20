@@ -59,7 +59,7 @@ This plugin has only been tested with versions of WordPress as early as 2.8.4. F
 == Changelog ==
 
 = 0.2 =
-* Fixed compression override. It was set up for &lt;!--wp-compress-html no compression--&gt; instead of &lt;!--wp-html-compression no compression--&gt;.
+* Fixed compression override
 
 = 0.1 =
 * Initial release
