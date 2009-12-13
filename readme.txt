@@ -28,7 +28,7 @@ Development of this plugin started with the intent of updating **[WP-Compress-HT
 
 == Frequently Asked Questions ==
 
-= Will this plugin slow my page loading times? =
+= Will this plugin slow down my page load times? =
 
 Yes, slightly. Use **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**.
 
@@ -38,11 +38,11 @@ No. :-)
 
 = How do I mark areas that should not be compressed? =
 
-While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically left uncompressed, you can designate any code to be exempted from compression. Simply drop your content between a pair of &lt;!--wp-html-compression no compression--&gt; comment tags. A picture is worth a thousand words— check the **[screenshots](http://wordpress.org/extend/plugins/wp-html-compression/screenshots/)**.
+While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically left uncompressed, you can designate any code to be exempted from compression. Simply drop your content between a pair of `&lt;!--wp-html-compression no compression--&gt;` comment tags. A picture is worth a thousand words— check the **[screenshots](http://wordpress.org/extend/plugins/wp-html-compression/screenshots/)**.
 
 = I'd like to compress the contents of &lt;script&gt; tags. Can I do this? =
 
-Until a settings page is created, you'll have to edit the file from the "Plugins" menu in the WordPress admin. Look for the $compress_js variable and set it to true.
+Until a settings page is created, you'll have to edit the file from the "Plugins" menu in the WordPress admin. Look for the `$compress_js` variable and set it to `true`.
 
 = Are you or have you thought of using HTML Tidy? =
 
