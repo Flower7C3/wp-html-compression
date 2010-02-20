@@ -13,7 +13,7 @@ Reduce file size by safely removing all standard comments and unnecessary white 
 
 == Description ==
 
-Combining HTML compression with cache and HTTP compression will cut down your bandwidth and ensure near-immediate content delivery.
+Combining HTML compression with cache and HTTP compression (<a href="http://wordpress.org/extend/plugins/wp-super-cache/">WP Super Cache</a>, or similar) will cut down your bandwidth and ensure near-immediate content delivery.
 
 With this plugin, you can compress your HTML by removing standard comments, new lines, carriage returns, tabs and excess spaces. More importantly, all this can be done without &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tag issues.
 
