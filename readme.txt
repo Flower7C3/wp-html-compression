@@ -3,7 +3,7 @@ Author: Steven Vachon
 URL: http://www.svachon.com/
 Contact: prometh@gmail.com
 Contributors: prometh, mandar-marathe
-Tags: comment, comments, compress, compression, html, minify, space, template
+Tags: bandwidth, comment, comments, compress, compressed, compression, faster, html, loading, minify, plugin, reduction, speed, space, template
 Requires at least: 2.8.4
 Tested up to: 2.9.1
 Stable tag: trunk
