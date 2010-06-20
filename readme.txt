@@ -5,7 +5,7 @@ Contact: prometh@gmail.com
 Contributors: prometh, mandar-marathe
 Tags: bandwidth, comment, comments, compress, compressed, compression, faster, html, loading, minify, plugin, reduction, speed, space, template
 Requires at least: 2.8.4
-Tested up to: 2.9.2
+Tested up to: 3.0
 Stable tag: trunk
 
 Reduce file size by safely removing all standard comments and unnecessary white space from an HTML document.
@@ -13,13 +13,13 @@ Reduce file size by safely removing all standard comments and unnecessary white 
 
 == Description ==
 
-**If you're running PHP4, kindly *f_ck off*. Quit giving me bad ratings.**
+**If you're running PHP4, quit giving me bad ratings and *read below*.**
 
-Combining HTML compression with cache and HTTP compression (**[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**, or similar) will cut down your bandwidth and ensure near-immediate content delivery.
+Combining HTML "minification" with cache and HTTP compression (**[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**, or similar) will cut down your bandwidth and ensure near-immediate content delivery.
 
 With this plugin, you can compress your HTML by removing standard comments, new lines, carriage returns, tabs and excess spaces. More importantly, all this can be done without &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tag issues.
 
-Development of this plugin started with the intent of updating **[WP-Compress-HTML](http://wordpress.org/extend/plugins/wp-compress-html/)**. Although it was soon realized that to achieve what was required, the whole thing needed to be rewritten. Backwards compatibility with WP-Compress-HTML's compression override was also broken. The WP-Compress-HTML developer was included as a co-author for this plugin because a couple of his ideas were used.
+**If you *are* using PHP4**, consider using **[WP-Compress-HTML](http://wordpress.org/extend/plugins/wp-compress-html/)** as it has similar—but fewer—features.
 
 
 == Installation ==
