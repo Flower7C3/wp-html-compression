@@ -17,9 +17,9 @@ Reduce file size by safely removing all standard comments and unnecessary white 
 
 Combining HTML "minification" with cache and HTTP compression (**[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**, or similar) will cut down your bandwidth and ensure near-immediate content delivery.
 
-With this plugin, you can compress your HTML by removing standard comments, new lines, carriage returns, tabs and excess spaces. More importantly, all this can be done without &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tag issues.
+With this plugin, you can compress your HTML by removing standard comments, new lines, carriage returns, tabs and excess spaces. More importantly, such is ignored within `<pre>`, `<textarea>` and `<script>` tags. Additionally, IE conditional comments will not be removed.
 
-**If you *are* using PHP4**, consider using **[WP-Compress-HTML](http://wordpress.org/extend/plugins/wp-compress-html/)** as it has similar�but fewer�features.
+**If you *are* using PHP4**, consider using **[WP-Compress-HTML](http://wordpress.org/extend/plugins/wp-compress-html/)** or **[WP-HTML-Compressor](http://wordpress.org/extend/plugins/wp-html-compressor/)** as they have similar—but fewer—features.
 
 
 == Installation ==
@@ -36,11 +36,11 @@ Yes, slightly. Use **[WP Super Cache](http://wordpress.org/extend/plugins/wp-sup
 
 = Will Internet Explorer conditional comments be removed? =
 
-No. :-)
+No.
 
 = How do I mark areas that should not be compressed? =
 
-While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically left uncompressed, you can designate any code to be exempted from compression. Simply drop your content between a pair of `<!--wp-html-compression no compression-->` comment tags. A picture is worth a thousand words— check the **[screenshots](http://wordpress.org/extend/plugins/wp-html-compression/screenshots/)**.
+While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically left uncompressed, you can designate any code to be exempted from compression. Simply drop your content between a pair of `<!--wp-html-compression no compression-->` comment tags. A picture is worth a thousand words‚Äî check the **[screenshots](http://wordpress.org/extend/plugins/wp-html-compression/screenshots/)**.
 
 = I'd like to compress the contents of &lt;script&gt; tags. Can I do this? =
 
