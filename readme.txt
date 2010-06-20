@@ -17,7 +17,7 @@ Reduce file size by safely removing all standard comments and unnecessary white 
 
 Combining HTML "minification" with cache and HTTP compression (**[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**, or similar) will cut down your bandwidth and ensure near-immediate content delivery.
 
-With this plugin, you can compress your HTML by removing standard comments, new lines, carriage returns, tabs and excess spaces. More importantly, such is ignored within `<pre>`, `<textarea>` and `<script>` tags. Additionally, IE conditional comments will not be removed.
+By using this plugin, you can compress your HTML by removing **white space** including standard comments, new lines, carriage returns, tabs and excess spaces. Most importantly, it **won't affect presentation** by avoiding `<pre>`, `<textarea>` and `<script>` tags. Additionally, IE **conditional comments** will not be removed.
 
 **If you *are* using PHP4**, consider using **[WP-Compress-HTML](http://wordpress.org/extend/plugins/wp-compress-html/)** or **[WP-HTML-Compressor](http://wordpress.org/extend/plugins/wp-html-compressor/)** as they have similar—but fewer—features.
 
@@ -32,11 +32,15 @@ With this plugin, you can compress your HTML by removing standard comments, new 
 
 = Will this plugin slow down my page load times? =
 
-Yes, slightly. Use **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**.
+Yes, slightly. While you should be using **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)** anyway, that will correct the issue.
 
 = Will Internet Explorer conditional comments be removed? =
 
 No.
+
+= I have invalid HTML, will this cause an issue? =
+
+Probably.
 
 = How do I mark areas that should not be compressed? =
 
