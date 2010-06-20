@@ -42,7 +42,7 @@ Probably.
 
 = How do I mark areas that should not be compressed? =
 
-While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically left uncompressed, you can designate any code to be exempted from compression. Simply drop your content between a pair of `<!--wp-html-compression no compression-->` comment tags. A picture is worth a thousand words‚Äî check the **[screenshots](http://wordpress.org/extend/plugins/wp-html-compression/screenshots/)**.
+While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically left uncompressed, you can designate any code to be exempted from compression. Simply drop your content between a pair of `<!--wp-html-compression no compression-->` comment tags. A picture is worth a thousand words; so, check the **[screenshots](http://wordpress.org/extend/plugins/wp-html-compression/screenshots/)**.
 
 = I'd like to compress the contents of &lt;script&gt; tags. Can I do this? =
 
