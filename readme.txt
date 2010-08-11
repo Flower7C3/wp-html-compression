@@ -5,7 +5,7 @@ Contact: prometh@gmail.com
 Contributors: prometh
 Tags: bandwidth, comment, comments, compress, compressed, compression, faster, html, loading, minification, minified, minify, plugin, reduction, speed, space, template
 Requires at least: 2.8.4
-Tested up to: 3.0
+Tested up to: 3.0.1
 Stable tag: trunk
 
 Reduce file size by safely removing all standard comments and unnecessary white space from an HTML document.
@@ -13,11 +13,11 @@ Reduce file size by safely removing all standard comments and unnecessary white 
 
 == Description ==
 
-**If you're running PHP4, quit giving me bad ratings and use something else.**
+**If you're not running at least PHP 5.2, quit giving me bad ratings and use something else.**
 
 Combining HTML "minification" with cache and HTTP compression (**[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**, or similar) will cut down your bandwidth and ensure near-immediate content delivery.
 
-By using this plugin, you can compress your HTML by removing **white space** including standard comments, new lines, carriage returns, tabs and excess spaces. Most importantly, it ***won't affect presentation*** by avoiding `<pre>`, `<textarea>`, `<script>` and Explorer `conditional comment` tags.
+This plugin will compress your HTML by removing **standard comments** and **white space**; including new lines, carriage returns, tabs and excess spaces. Most importantly, by ignoring `<pre>`, `<textarea>`, `<script>` and Explorer `conditional comment` tags, ***presentation will not be affected***.
 
 
 == Installation ==
@@ -30,31 +30,35 @@ By using this plugin, you can compress your HTML by removing **white space** inc
 
 = Will this plugin slow down my page load times? =
 
-Yes, slightly. While you should be using **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)** anyway, that will correct the issue.
+Yes, slightly. While you should be using **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)** anyway, it will correct the issue.
 
 = Will Internet Explorer conditional comments be removed? =
 
 No.
 
-= I have invalid HTML, will this cause an issue? =
+= Will having invalid HTML cause an issue? =
 
-Probably.
+Probably, however WordPress does a pretty good job of correcting invalid markup. But honestly, it's your job to make sure that your code doesn't suck.
 
 = How do I mark areas that should not be compressed? =
 
 While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically left uncompressed, you can designate any code to be exempted from compression. Simply drop your content between a pair of `<!--wp-html-compression no compression-->` comment tags. A picture is worth a thousand words; so, check the **[screenshots](http://wordpress.org/extend/plugins/wp-html-compression/screenshots/)**.
 
-= I'd like to compress the contents of &lt;script&gt; tags. Can I do this? =
+= How do I compress the contents of &lt;script&gt; tags? =
 
 Until a settings page is created, you'll have to edit the file from the "Plugins" menu in the WordPress admin. Look for the `$compress_js` variable and set it to `true`.
 
 = Are you or have you thought of using HTML Tidy? =
 
-Since not every WordPress server supports the installation of PHP extensions, this plugin does not currently make use of HTML Tidy. However, future releases might.
+Since not every WordPress server supports the installation of PHP extensions, this plugin does not currently make use of HTML Tidy. However, future releases may do so.
 
-= Will this work for WordPress version x.x.x? =
+= Will this plugin work for WordPress version x.x.x? =
 
 This plugin has only been tested with versions of WordPress as early as 2.8.4. For anything older, you'll have to see for yourself.
+
+= Why do you only support a minimum of PHP 5.2? =
+
+It offers substantial improvements over earlier PHP 5 releases, and WordPress 3.1 will not be supporting anything less.
 
 
 == Screenshots ==
