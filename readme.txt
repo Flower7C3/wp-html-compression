@@ -5,7 +5,7 @@ Contact: prometh@gmail.com
 Contributors: prometh
 Tags: bandwidth, comment, comments, compress, compressed, compression, faster, html, loading, minification, minified, minify, plugin, reduction, speed, space, template
 Requires at least: 2.8.4
-Tested up to: 3.0.1
+Tested up to: 3.0.5
 Stable tag: trunk
 
 Reduce file size by safely removing all standard comments and unnecessary white space from an HTML document.
@@ -58,7 +58,7 @@ This plugin has only been tested with versions of WordPress as early as 2.8.4. F
 
 = Why do you only support a minimum of PHP 5.2? =
 
-It offers substantial improvements over earlier PHP 5 releases, and WordPress 3.1 will not be supporting anything less.
+It offers substantial improvements over earlier PHP 5 releases, and WordPress 3.2 will not be supporting anything less.
 
 
 == Screenshots ==
