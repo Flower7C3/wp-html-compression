@@ -70,9 +70,12 @@ It offers substantial improvements over earlier PHP 5 releases, and WordPress 3.
 
 == Changelog ==
 
+= 0.4 =
+* Removes empty attributes except `action`, `alt`, `content`, `src`
+
 = 0.3 =
 * Comments in &lt;textarea&gt; are no longer removed. Browsers seem to display such text
-* Removes excess spacing within &lt;br/&gt;, &lt;hr/&gt;, &lt;img/&gt; and &lt;input/&gt; tags
+* Removes excess spacing within self-closing tags
 * Speed optimizations
 
 = 0.2 =
