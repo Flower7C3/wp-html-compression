@@ -3,7 +3,7 @@
 Plugin Name: WP-HTML-Compression
 Plugin URI: http://www.svachon.com/wp-html-compression/
 Description: Reduce file size by safely removing all standard comments and unnecessary white space from an HTML document.
-Version: 0.3
+Version: 0.4
 Author: Steven Vachon
 Author URI: http://www.svachon.com/
 Author Email: prometh@gmail.com
@@ -113,9 +113,13 @@ class WP_HTML_Compression
 					{
 						$strip = true;
 						
+						// Remove any empty attributes, except:
+						// action, alt, content, src
+						$content = preg_replace('/(\s+)(\w++(?<!\baction|\balt|\bcontent|\bsrc)="")/', '$1', $content);
+						
 						// Remove any space before the end of self-closing XHTML tags
 						// JavaScript excluded
-						$content = str_replace(' />',  '/>', $content);
+						$content = str_replace(' />', '/>', $content);
 					}
 				}
 			}
