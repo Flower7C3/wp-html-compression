@@ -4,16 +4,14 @@ URL: http://www.svachon.com/
 Contact: prometh@gmail.com
 Contributors: prometh
 Tags: bandwidth, comment, comments, compress, compressed, compression, faster, html, loading, optimize, optimization, minification, minified, minify, performance, plugin, reduction, speed, space, template
-Requires at least: 2.8.4
-Tested up to: 3.1
+Requires at least: 3.2
+Tested up to: 3.2
 Stable tag: trunk
 
 Reduce file size by safely removing all standard comments and unnecessary white space from an HTML document.
 
 
 == Description ==
-
-**If you're not running at least PHP 5.2, quit giving me bad ratings and use something else.**
 
 Combining HTML "minification" with cache and HTTP compression (**[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**, or similar) will cut down your bandwidth and ensure near-immediate content delivery.
 
@@ -54,11 +52,7 @@ Since not every WordPress server supports the installation of PHP extensions, th
 
 = Will this plugin work for WordPress version x.x.x? =
 
-This plugin has only been tested with versions of WordPress as early as 2.8.4. For anything older, you'll have to see for yourself.
-
-= Why do you only support a minimum of PHP 5.2? =
-
-It offers substantial improvements over earlier PHP 5 releases, and WordPress 3.2 will not be supporting anything less.
+This plugin has only been tested with versions of WordPress as early as 3.2. For anything older, you'll have to see for yourself.
 
 
 == Screenshots ==
