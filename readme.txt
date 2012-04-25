@@ -4,8 +4,8 @@ URL: http://www.svachon.com/
 Contact: prometh@gmail.com
 Contributors: prometh
 Tags: bandwidth, comment, comments, compress, compressed, compression, faster, html, loading, optimize, optimization, magnification, minified, minify, performance, plugin, reduction, relative, speed, space, template, whitespace
-Requires at least: 2.8.4
-Tested up to: 3.1
+Requires at least: 3.2
+Tested up to: 3.2
 Stable tag: trunk
 
 Reduce file size by shortening URLs and safely removing all standard comments and unnecessary whitespace from an HTML document.
@@ -52,11 +52,7 @@ Since not every WordPress server supports the installation of PHP extensions, th
 
 = Will this plugin work for WordPress version x.x.x? =
 
-This plugin has only been tested with versions of WordPress as early as 2.8.4. For anything older, you'll have to see for yourself.
-
-= Why do you only support a minimum of PHP 5.2? =
-
-It offers substantial improvements over earlier PHP 5 releases, and WordPress 3.2 will not be supporting anything less.
+This plugin has only been tested with versions of WordPress as early as 3.2. For anything older, you'll have to see for yourself.
 
 
 == Screenshots ==
