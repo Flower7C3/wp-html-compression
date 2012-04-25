@@ -5,7 +5,7 @@ Contact: prometh@gmail.com
 Contributors: prometh
 Tags: bandwidth, comment, comments, compress, compressed, compression, faster, google, html, loading, optimize, optimization, minification, minified, minify, performance, plugin, reduction, relative, seo, speed, space, template, whitespace
 Requires at least: 3.2
-Tested up to: 3.2
+Tested up to: 3.3.2
 Stable tag: trunk
 
 Reduce file size by shortening URLs and safely removing all standard comments and unnecessary whitespace from an HTML document.
