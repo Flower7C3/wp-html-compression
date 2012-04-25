@@ -3,7 +3,7 @@ Author: Steven Vachon
 URL: http://www.svachon.com/
 Contact: prometh@gmail.com
 Contributors: prometh
-Tags: bandwidth, comment, comments, compress, compressed, compression, faster, html, loading, optimize, optimization, magnification, minified, minify, performance, plugin, reduction, relative, speed, space, template, whitespace
+Tags: bandwidth, comment, comments, compress, compressed, compression, faster, google, html, loading, optimize, optimization, minification, minified, minify, performance, plugin, reduction, relative, seo, speed, space, template, whitespace
 Requires at least: 3.2
 Tested up to: 3.2
 Stable tag: trunk
@@ -77,7 +77,7 @@ This plugin has only been tested with versions of WordPress as early as 3.2. For
 * Speed optimizations
 
 = 0.4 =
-* Removes empty attributes *except* `action`/`alt`/`content`/`src`
+* Removes empty attributes except `action`, `alt`, `content`, `src`
 
 = 0.3 =
 * Comments in &lt;textarea&gt; are no longer removed. Browsers seem to display such text
