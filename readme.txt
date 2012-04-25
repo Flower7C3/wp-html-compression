@@ -28,7 +28,7 @@ This plugin will compress your HTML by shortening **URLs** and removing **standa
 
 = Will this plugin slow down my page load times? =
 
-Yes, slightly. While you should be using **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)** anyway, it will correct the issue.
+Yes, by about 1/1000th of a second. While you should be using **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)** anyway, it will correct the issue.
 
 = Will Internet Explorer conditional comments be removed? =
 
