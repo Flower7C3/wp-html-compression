@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WP-HTML-Compression
-Plugin URI: http://www.svachon.com/wp-html-compression/
+Plugin URI: http://www.svachon.com/blog/wp-html-compression/
 Description: Reduce file size by removing all standard comments and unnecessary whitespace from an HTML document.
 Version: 0.5
 Author: Steven Vachon
