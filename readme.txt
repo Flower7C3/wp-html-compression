@@ -65,7 +65,7 @@ This plugin has only been tested with versions of WordPress as early as 3.2. For
 == Changelog ==
 
 = 0.5 =
-* Includes **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)** for `action`/`href`/`src` attributes
+* Includes **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)** for `action`, `href`, `src` attributes
 * Bypasses compression for RSS/Atom feeds
 * Bypasses compression on admin/dashboard pages to free up resources for other tools/plugins
 * Compresses themes that don't make use of a header.php file (previously did not)
