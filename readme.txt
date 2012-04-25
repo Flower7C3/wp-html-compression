@@ -13,8 +13,6 @@ Reduce file size by shortening URLs and safely removing all standard comments an
 
 == Description ==
 
-**If you're not running at least PHP 5.2, quit giving me bad ratings and use something else.**
-
 Combining HTML "minification" with cache and HTTP compression (**[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**, or similar) will cut down your bandwidth and ensure near-immediate content delivery.
 
 This plugin will compress your HTML by shortening **URLs** and removing **standard comments** and **whitespace**; including new lines, carriage returns, tabs and excess spaces. Most importantly, by ignoring `<pre>`, `<textarea>`, `<script>` and Explorer `conditional comment` tags, ***presentation will not be affected***.
