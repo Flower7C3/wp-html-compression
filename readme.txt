@@ -3,19 +3,23 @@ Author: Steven Vachon
 URL: http://www.svachon.com/
 Contact: prometh@gmail.com
 Contributors: prometh
-Tags: bandwidth, comment, comments, compress, compressed, compression, faster, google, html, loading, optimize, optimization, minification, minified, minify, performance, plugin, reduction, seo, speed, space, template
-Requires at least: 3.2
-Tested up to: 3.2
+Tags: bandwidth, comment, comments, compress, compressed, compression, faster, html, loading, optimize, optimization, magnification, minified, minify, performance, plugin, reduction, relative, speed, space, template, whitespace
+Requires at least: 2.8.4
+Tested up to: 3.1
 Stable tag: trunk
 
-Reduce file size by safely removing all standard comments and unnecessary white space from an HTML document.
+Reduce file size by shortening URLs and safely removing all standard comments and unnecessary whitespace from an HTML document.
 
 
 == Description ==
 
-Combining HTML "minification" with cache and HTTP compression (**[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**, or similar) will cut down your bandwidth and ensure near-immediate content delivery while increasing your Google page rank.
+**If you're not running at least PHP 5.2, quit giving me bad ratings and use something else.**
 
-This plugin will compress your HTML by removing **standard comments** and **white space**; including new lines, carriage returns, tabs and excess spaces. Most importantly, by ignoring `<pre>`, `<textarea>`, `<script>` and Explorer `conditional comment` tags, ***presentation will not be affected***.
+Combining HTML "minification" with cache and HTTP compression (**[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**, or similar) will cut down your bandwidth and ensure near-immediate content delivery.
+
+This plugin will compress your HTML by shortening **URLs** and removing **standard comments** and **whitespace**; including new lines, carriage returns, tabs and excess spaces. Most importantly, by ignoring `<pre>`, `<textarea>`, `<script>` and Explorer `conditional comment` tags, ***presentation will not be affected***.
+
+This plugin will also convert absolute URLs within your domain to relative URLs.
 
 
 == Installation ==
@@ -52,7 +56,11 @@ Since not every WordPress server supports the installation of PHP extensions, th
 
 = Will this plugin work for WordPress version x.x.x? =
 
-This plugin has only been tested with versions of WordPress as early as 3.2. For anything older, you'll have to see for yourself.
+This plugin has only been tested with versions of WordPress as early as 2.8.4. For anything older, you'll have to see for yourself.
+
+= Why do you only support a minimum of PHP 5.2? =
+
+It offers substantial improvements over earlier PHP 5 releases, and WordPress 3.2 will not be supporting anything less.
 
 
 == Screenshots ==
@@ -64,8 +72,20 @@ This plugin has only been tested with versions of WordPress as early as 3.2. For
 
 == Changelog ==
 
+= 0.5 =
+* Includes **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)** for `action`/`href`/`src` attributes
+* Bypasses compression for RSS/Atom feeds
+* Bypasses compression on admin/dashboard pages to free up resources for other tools/plugins
+* Compresses themes that don't make use of a header.php file (previously did not)
+* Removes any empty attributes using single-quote encapsulation (previously supported only double-quotes)
+* Removes excess spacing within opening and closing tags (previously supported only self-closing tags)
+* Converts new lines to spaces so that *rendered* whitespace is preserved
+* Simplified compression statistics comment
+* PHP errors hidden if/when plugin file is accessed directly
+* Speed optimizations
+
 = 0.4 =
-* Removes empty attributes except `action`, `alt`, `content`, `src`
+* Removes empty attributes *except* `action`/`alt`/`content`/`src`
 
 = 0.3 =
 * Comments in &lt;textarea&gt; are no longer removed. Browsers seem to display such text
