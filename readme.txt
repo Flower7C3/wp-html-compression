@@ -19,8 +19,6 @@ Combining HTML "minification" with cache and HTTP compression (**[WP Super Cache
 
 This plugin will compress your HTML by shortening **URLs** and removing **standard comments** and **whitespace**; including new lines, carriage returns, tabs and excess spaces. Most importantly, by ignoring `<pre>`, `<textarea>`, `<script>` and Explorer `conditional comment` tags, ***presentation will not be affected***.
 
-This plugin will also convert absolute URLs within your domain to relative URLs.
-
 
 == Installation ==
 
