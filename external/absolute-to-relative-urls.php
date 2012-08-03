@@ -2,8 +2,8 @@
 /*
 Plugin Name: Absolute-to-Relative URLs
 Plugin URI: http://www.svachon.com/
-Description: A <strong>function</strong> for use in shortening URL links. Just use <code><strong>absolute_to_relative_url</strong>( string <em>$url</em> [, bool <em>$ignore_www</em> = <em>true</em> [, bool <em>$choose_shortest_path</em> = <em>true</em>]] )</code>.
-Version: 0.2
+Description: A <strong>function</strong> for use in shortening URL links. Just use <code><strong>absolute_to_relative_url</strong>( string <em>$url</em> [, bool <em>$ignore_www</em> = <em>true</em> [, bool <em>$choose_shortest</em> = <em>true</em>]] )</code>.
+Version: 0.3
 Author: Steven Vachon
 Author URI: http://www.svachon.com/
 Author Email: prometh@gmail.com
@@ -14,17 +14,23 @@ class Absolute_to_Relative_URLs
 {
 	//protected static $_instance;
 	
-	protected $site_port_default;
+	protected $custom_ports;
+	protected $site_port_is_default;
 	protected $site_url;
-	protected $valid_site_url;
 	
 	
 	
-	public function __construct($custom_site_url='')
+	/*
+		$custom_site_url :: should be a valid URL, with scheme and host
+		$custom_ports    :: e.g., array('ssh'=>22)
+	*/
+	public function __construct($custom_site_url='', $custom_ports=array())
 	{
-		$this->valid_site_url = $this->get_site_url($custom_site_url);
+		$this->custom_ports = $custom_ports;
 		
-		if (!$this->valid_site_url)
+		$this->get_site_url($custom_site_url);
+		
+		if ($this->site_url === false)
 		{
 			trigger_error('Invalid site URL');
 		}
@@ -38,7 +44,7 @@ class Absolute_to_Relative_URLs
 	*/
 	/*public static function instance()
 	{
-		if (self::$_instance == null)
+		if (self::$_instance === null)
 		{
 			self::$_instance = new Absolute_to_Relative_URLs();
 		}
@@ -48,13 +54,144 @@ class Absolute_to_Relative_URLs
 	
 	
 	
+	protected function build_url($url, $output_type)
+	{
+		$has_fragment = isset($url['fragment']);
+		$has_resource = isset($url['resource']);
+		$has_query    = isset($url['query']);
+		
+		if ( isset($url['scheme']) )
+		{
+			$first_half = $url['scheme'] . ':';
+		}
+		else
+		{
+			$first_half = '';
+		}
+		
+		if ( isset($url['host']) )
+		{
+			$first_half .= '//';
+			
+			$user_or_pass = false;
+			
+			if ( isset($url['user']) )
+			{
+				$first_half .= $url['user'];
+				
+				$user_or_pass = true;
+			}
+			
+			if ( isset($url['pass']) )
+			{
+				$first_half .= ':' . $url['pass'];
+				
+				$user_or_pass = true;
+			}
+			
+			if ($user_or_pass)
+			{
+				$first_half .= '@';
+			}
+			
+			$first_half .= $url['host'];
+			
+			if ( isset($url['port']) )
+			{
+				$first_half .= ':' . $url['port'];
+			}
+			
+			$second_half = $url['path'];
+		}
+		else
+		{
+			if ($output_type===1 || $output_type===2)
+			{
+				$absolute_path = $url['path'];
+				$relative_path = (isset($url['path_relative'])) ? $url['path_relative'] : false;
+				
+				if ($relative_path !== false)
+				{
+					if ($output_type === 2)
+					{
+						$second_half = (strlen($relative_path) <= strlen($absolute_path)) ? $relative_path : $absolute_path;
+					}
+					else
+					{
+						$second_half = $relative_path;
+					}
+				}
+				else
+				{
+					$second_half = $absolute_path;
+				}
+			}
+			else if ($output_type === 0)
+			{
+				$second_half = $url['path'];
+			}
+			
+			if ($has_resource || $has_query || $has_fragment)
+			{
+				if ($second_half==='./' || ($second_half==='/' && $this->site_url['path']==='/'))
+				{
+					$second_half = '';
+				}
+			}
+		}
+		
+		if ($has_resource)
+		{
+			$second_half .= $url['resource'];
+		}
+		
+		if ($has_query)
+		{
+			$second_half .= '?'. $url['query'];
+		}
+		
+		if ($has_fragment)
+		{
+			$second_half .= '#'. $url['fragment'];
+		}
+		
+		return $first_half . $second_half;
+	}
+	
+	
+	
+	protected function get_default_port($scheme)
+	{
+		switch ($scheme)
+		{
+			case 'http'		:	return 80;
+			case 'https'	:	return 443;
+			case 'ftp'		:	return 21;
+		}
+		
+		foreach ($this->custom_ports as $port_name => $port)
+		{
+			$port_name = strtolower($port_name);
+			
+			if ($port_name === $scheme)
+			{
+				return $port;
+			}
+		}
+		
+		// No listed match found
+		return -1;
+	}
+	
+	
+	
 	protected function get_site_url($custom_site_url)
 	{
-		if ($custom_site_url == '')
+		if ($custom_site_url === '')
 		{
-			$https = isset($_SERVER['HTTPS']);
+			$this->custom_site_url = true;
 			
-			$url = (!$https) ? 'http://' : 'https://';
+			$url = ( !isset($_SERVER['HTTPS']) )   ?   'http://' : 'https://';
 			
 			if ( isset($_SERVER['PHP_AUTH_USER']) )
 			{
@@ -68,31 +205,25 @@ class Absolute_to_Relative_URLs
 			$url = $custom_site_url;
 		}
 		
-		$url = $this->parse_url($url);
+		$url = $this->parse_url($url, true);
 		
 		if ($url !== false)
 		{
-			$https = ($url['scheme'] == 'https');
-			
-			if ( !isset($url['port']) )
+			if ( isset($url['port']) )
 			{
-				// POSSIBLE v0.3 :: catch default ports for other protocols
-				$url['port'] = (!$https) ? 80 : 443;
+				$this->site_port_is_default = ($url['port'] === $this->get_default_port($url['scheme']));
+			}
+			else
+			{
+				$url['port'] = $this->get_default_port($url['scheme']);
+				
+				$this->site_port_is_default = true;
 			}
 			
 			$url['host_stripped'] = $this->remove_www($url['host']);
-			
-			$url['path_array'] = $this->parse_path($url['path'], true, false);
-			
-			// POSSIBLE v0.3 :: more default ports
-			$this->site_port_default = (!$https && $url['port']==80   ||   $https && $url['port']==443);
-			
-			$this->site_url = $url;
-			
-			return true;
 		}
 		
-		return false;
+		$this->site_url = $url;
 	}
 	
 	
@@ -100,20 +231,20 @@ class Absolute_to_Relative_URLs
 	/*
 		Return an path string.
 	*/
-	protected function implode_path($path, $absolute)
+	protected function implode_path($path, $absolute_output)
 	{
 		if (!empty($path))
 		{
 			$path = implode('/', $path) .'/';
 			
-			if ($absolute)
+			if ($absolute_output)
 			{
 				$path = '/'.$path;
 			}
 		}
 		else
 		{
-			$path = (!$absolute) ? './' : '/';
+			$path = (!$absolute_output) ? './' : '/';
 		}
 		
 		return $path;
@@ -124,49 +255,55 @@ class Absolute_to_Relative_URLs
 	/*
 		Return an absolute path.
 	*/
-	protected function parse_path($path, $absolute_source, $compare_to_site_url)
+	protected function parse_path($path)
 	{
-		$path = explode('/', $path);
-		$absolute_path = array();
-		
-		if ($compare_to_site_url)
+		if ($path !== '/')
 		{
-			// Avoid problems with "host/./"
-			if (!$absolute_source)
+			$path = explode('/', $path);
+			$absolute_path = array();
+			
+			$first_dir = $path[0];
+			
+			// Check if not absolute: '/dir/' becomes array('','dir','')
+			if ($first_dir !== '')
 			{
-				$first_dir = $path[0];
-				
-				if ($first_dir=='.' || $first_dir=='..')
+				if ($first_dir==='.' || $first_dir==='..')
 				{
 					$path = array_merge($this->site_url['path_array'], $path);
 				}
 			}
-		}
-		
-		foreach ($path as $dir)
-		{
-			if ($dir != '')
+			
+			foreach ($path as $dir)
 			{
-				if ($dir != '..')
+				if ($dir !== '')
 				{
-					if ($dir != '.')
+					if ($dir !== '..')
 					{
-						array_push($absolute_path, $dir);
+						if ($dir !== '.')
+						{
+							array_push($absolute_path, $dir);
+						}
 					}
-				}
-				else
-				{
-					$parent_index = count($absolute_path) - 1;
-					
-					if ($parent_index >= 0)
+					else
 					{
-						array_splice($absolute_path, $parent_index, 1);
+						$parent_index = count($absolute_path) - 1;
+						
+						if ($parent_index >= 0)
+						{
+							unset( $absolute_path[$parent_index] );
+							$absolute_path = array_values($absolute_path);
+						}
 					}
 				}
 			}
+			
+			return $absolute_path;
 		}
-		
-		return $absolute_path;
+		else
+		{
+			// Faster to skip the above block and just create an array
+			return array();
+		}
 	}
 	
 	
@@ -174,14 +311,38 @@ class Absolute_to_Relative_URLs
 	/*
 		Return the components of a URL.
 	*/
-	protected function parse_url($url)
+	protected function parse_url($url, $init=false)
 	{
+		if (strpos($url, '//') === 0)
+		{
+			// Cannot parse scheme-relative URLs with parse_url
+			$url = $this->site_url['scheme'] . ':' . $url;
+		}
+		
 		// With PHP versions earlier than 5.3.3, an E_WARNING is emitted when URL parsing fails
 		// REMOVE when WordPress enforces a higher version as it will increase performance
 		$url = @parse_url($url);
 		
 		if ($url !== false)
 		{
+			// #anchor
+			// index.html
+			// /index.html
+			// http://webserver
+			// http://webserver/
+			// http://webserver/index.html
+			// http://webserver/./../index.html
+			
+			if ($init)
+			{
+				// Checks for host to catch "host:80"
+				if ( !isset($url['scheme']) || !isset($url['host']) )
+				{
+					// Invalid site url
+					return false;
+				}
+			}
+			
 			if ( isset($url['path']) )
 			{
 				$path = str_replace(' ', '%20', $url['path']);
@@ -190,51 +351,37 @@ class Absolute_to_Relative_URLs
 				
 				if ($last_slash !== false)
 				{
-					if ($last_slash+1 < strlen($path))
+					$last_slash++;
+					
+					if ($last_slash < strlen($path))
 					{
 						// Isolate resource from path
-						$url['resource'] = substr($path, $last_slash+1);
+						$url['resource'] = substr($path, $last_slash);
+						
+						$path = substr($path, 0, $last_slash);
 					}
 					
-					// Remove last slash and any possible resource
-					$path = substr($path, 0, $last_slash);
-					
-					// Empty means root (later)
-					if (!empty($path))
-					{
-						if (strpos($path, '/') === 0)
-						{
-							// Remove first slash
-							$path = substr($path, 1);
-						}
-						else if (strpos($path, '.')   !== 0 &&
-						         strpos($path, './')  !== 0 &&
-						         strpos($path, '..')  !== 0 &&
-						         strpos($path, '../') !== 0)
-						{
-							// Not root
-							$path = './' . $path;
-						}
-					}
+					$url['path_array'] = $this->parse_path($path);
+					$url['path'] = $this->implode_path($url['path_array'], true);
 				}
 				else
 				{
 					// No slashes found
 					$url['resource'] = $path;
 					
-					// Not root
-					$path = '.';
+					$url['path'] = $this->site_url['path'];
+					$url['path_array'] = $this->site_url['path_array'];
 				}
-				
-				$url['path'] = $path;
 			}
-			else if ( !isset($url['host']) )
+			else if ( isset($url['host']) )
 			{
-				$url['path'] = '.';
+				$url['path'] = '/';
+				$url['path_array'] = array();
 			}
 			else
 			{
-				$url['path'] = '';
+				$url['path'] = $this->site_url['path'];
+				$url['path_array'] = $this->site_url['path_array'];
 			}
 		}
 		
@@ -245,11 +392,9 @@ class Absolute_to_Relative_URLs
 	
 	/*
 		Return a path relative to the site path.
-		Optionally, return whichever path is shortest (absolute or relative).
 	*/
-	protected function relate_path($path, $absolute_source, $choose_shortest_path)
+	protected function relate_path($absolute_path)
 	{
-		$absolute_path = $this->parse_path($path, $absolute_source, true);
 		$relative_path = array();
 		$site_path = $this->site_url['path_array'];
 		
@@ -264,7 +409,7 @@ class Absolute_to_Relative_URLs
 			{
 				$absolute_dir = (isset($absolute_path[$i])) ? $absolute_path[$i] : null;
 				
-				if ($dir != $absolute_dir)
+				if ($dir !== $absolute_dir)
 				{
 					$related = false;
 				}
@@ -281,6 +426,8 @@ class Absolute_to_Relative_URLs
 			}
 		}
 		
+		// TEMP :: faster to remove from $absolute_path then merge with $relative_path?
+		
 		// Form path
 		foreach ($absolute_path as $i => $dir)
 		{
@@ -290,33 +437,45 @@ class Absolute_to_Relative_URLs
 			}
 		}
 		
-		$absolute_path = $this->implode_path($absolute_path, true);
-		$relative_path = $this->implode_path($relative_path, false);
-		
-		if ($choose_shortest_path)
-		{
-			$path = (strlen($relative_path) <= strlen($absolute_path)) ? $relative_path : $absolute_path;
-		}
-		else
-		{
-			$path = $relative_path;
-		}
-		
-		return $path;
+		return $relative_path;
 	}
 	
 	
 	
 	/*
 		Return a URL relative to the site URL.
+		
+		$ignore_www  :: optionally, ignore "www" subdomain
+		$output_type :: optionally, return either a:
+				0: root-relative URL (/child-of-root/etc/)
+				1: path-relative URL (../child-of-parent/etc/)
+				2: shortest possible URL (root- or path-relative)
 	*/
-	public function relate_url($url, $ignore_www, $choose_shortest_path)
+	public function relate_url($url, $ignore_www=true, $output_type=2)
 	{
-		if ($this->valid_site_url)
+		if ($this->site_url !== false)
 		{
-			if ($url=='' || $url=='.')
+			if ($url==='' || $url==='.' || $url==='./')
 			{
-				$url = './';
+				if ($this->site_url['path'] !== '/')
+				{
+					if ($output_type===1 || $output_type===2)
+					{
+						return './';
+					}
+					else if ($output_type === 0)
+					{
+						return $this->site_url['path'];
+					}
+				}
+				else
+				{
+					return '/';
+				}
+			}
+			else if ($url === '/')
+			{
+				return '/';
 			}
 			
 			$original_url = $url;
@@ -335,39 +494,16 @@ class Absolute_to_Relative_URLs
 			return $url;
 		}
 		
-		$absolute_source = isset($url['scheme']);
+		$related = false;
 		
-		if ($absolute_source)
+		if ( isset($url['scheme']) )
 		{
-			if ($url['scheme'] != $this->site_url['scheme'])
+			$scheme = $url['scheme'];
+			
+			if ($scheme === $this->site_url['scheme'])
 			{
-				// Different protocol
-				return $original_url;
+				unset($url['scheme']);
 				
-				// POSSIBLE v0.3 :: remote url path cleanup
-				//$remote_url = true;
-			}
-			
-			if ( isset($url['user']) )
-			{
-				if (!isset($this->site_url['user']) || $url['user'] != $this->site_url['user'])
-				{
-					// Different user
-					return $original_url;
-				}
-			}
-			
-			if ( isset($url['pass']) )
-			{
-				if (!isset($this->site_url['pass']) || $url['pass'] != $this->site_url['pass'])
-				{
-					// Different password
-					return $original_url;
-				}
-			}
-			
-			if ( isset($url['host']) )
-			{
 				if ($ignore_www)
 				{
 					$url['host'] = $this->remove_www($url['host']);
@@ -379,92 +515,113 @@ class Absolute_to_Relative_URLs
 					$site_host = $this->site_url['host'];
 				}
 				
-				if ($url['host'] == $site_host)
+				if ($url['host'] === $site_host)
 				{
+					$related = true;
+					
 					if ( isset($url['port']) )
 					{
-						if ($url['port'] != $this->site_url['port'])
+						if ($url['port'] === $this->site_url['port'])
 						{
-							// Different port
-							return $original_url;
+							unset($url['port']);
+						}
+						else
+						{
+							$related = false;
 						}
 					}
-					else if (!$this->site_port_default)
+					else if (!$this->site_port_is_default)
 					{
-						// Different port
-						return $original_url;
+						$related = false;
+					}
+					
+					if ( isset($url['user']) )
+					{
+						if (!isset($this->site_url['user']) || $url['user'] !== $this->site_url['user'])
+						{
+							$related = false;
+						}
+					}
+					/*else if ( isset($this->site_url['user']) )
+					{
+						$related = false;
+					}*/
+					
+					if ( isset($url['pass']) )
+					{
+						if (!isset($this->site_url['pass']) || $url['pass'] !== $this->site_url['pass'])
+						{
+							$related = false;
+						}
+					}
+					/*else if ( isset($this->site_url['pass']) )
+					{
+						$related = false;
+					}*/
+					
+					if ($related)
+					{
+						unset($url['host'], $url['user'], $url['pass']);
 					}
 				}
-				else
+				else if ( isset($url['port']) )
 				{
-					// Different domain
-					return $original_url;
+					if ($url['port'] === $this->get_default_port($scheme))
+					{
+						unset($url['port']);
+					}
+				}
+			}
+			else if ( isset($url['port']) )
+			{
+				if ($url['port'] === $this->get_default_port($scheme))
+				{
+					unset($url['port']);
 				}
 			}
 		}
-		else
+		
+		if ( !isset($url['host']) )
 		{
-			// POSSIBLE v0.3 :: do something to path?
+			$url['path_relative_array'] = $this->relate_path($url['path_array']);
+			$url['path_relative']       = $this->implode_path($url['path_relative_array'], false);
 		}
 		
-		$new_url = '';
-		
-		if ( isset($url['path']) )
-		{
-			$new_url = $this->relate_path($url['path'], $absolute_source, $choose_shortest_path);
-		}
-		
-		if ( isset($url['resource']) )
-		{
-			$new_url = $this->remove_unnecessary_path($new_url) . $url['resource'];
-		}
-		
-		if ( isset($url['query']) )
-		{
-			$new_url = $this->remove_unnecessary_path($new_url) .'?'. $url['query'];
-		}
-		
-		if ( isset($url['fragment']) )
-		{
-			$new_url = $this->remove_unnecessary_path($new_url) .'#'. $url['fragment'];
-		}
-		
-		return $new_url;
+		return $this->build_url($url, $output_type);
 	}
 	
 	
 	
-	/*
-		Shorten relative path for additional URL components.
-	*/
-	protected function remove_unnecessary_path($url)
+	protected function remove_www($host)
 	{
-		if ($url=='./' || ($url=='/' && $this->site_url['path']=='/'))
+		if (strpos($host, 'www.') === 0)
 		{
-			$url = '';
+			$host = substr($host, 4);
 		}
 		
-		return $url;
-	}
-	
-	
-	
-	protected function remove_www($url)
-	{
-		return str_replace('www.', '', $url);
+		return $host;
 	}
 }
 
 
 
-/*function absolute_to_relative_url($url, $ignore_www=true, $choose_shortest_path=true)
+/*function absolute_to_relative_url($url, $ignore_www=true, $choose_shortest=true)
 {
-	return Absolute_to_Relative_URLs::instance()->relate_url($url, $ignore_www, $choose_shortest_path);
+	return Absolute_to_Relative_URLs::instance()->relate_url($url, $ignore_www, $choose_shortest);
 }*/
 
 
 
-function absolute_to_relative_url($url, $ignore_www=true, $choose_shortest_path=true)
+/*
+	Return a URL relative to the current site URL.
+	
+	$ignore_www  :: optionally, ignore "www" subdomain
+	$output_type :: optionally, return either a:
+			0: root-relative URL (/child-of-root/etc/)
+			1: path-relative URL (../child-of-parent/etc/)
+			2: shortest possible URL (root- or path-relative)
+*/
+function absolute_to_relative_url($url, $ignore_www=true, $output_type=2)
 {
 	global $absolute_to_relative_url_instance;
 	
@@ -473,6 +630,6 @@ function absolute_to_relative_url($url, $ignore_www=true, $choose_shortest_path=
 		$absolute_to_relative_url_instance = new Absolute_to_Relative_URLs();
 	}
 	
-	return $absolute_to_relative_url_instance->relate_url($url, $ignore_www, $choose_shortest_path);
+	return $absolute_to_relative_url_instance->relate_url($url, $ignore_www, $output_type);
 }
 ?>

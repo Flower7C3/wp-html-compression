@@ -5,7 +5,7 @@ Contact: prometh@gmail.com
 Contributors: prometh
 Tags: absolute, bandwidth, comment, comments, compress, compressed, compression, faster, google, html, link, links, loading, optimize, optimization, minification, minified, minify, performance, plugin, reduction, relative, seo, shorten, speed, space, template, url, urls, whitespace
 Requires at least: 3.2
-Tested up to: 3.3.2
+Tested up to: 3.4.1
 Stable tag: trunk
 
 Reduce file size by shortening URLs and safely removing all standard comments and unnecessary whitespace from an HTML document.
@@ -28,7 +28,7 @@ This plugin will compress your HTML by shortening **URLs** and removing **standa
 
 = Will this plugin slow down my page load times? =
 
-Yes, by about 1/1000th of a second. While you should be using **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)** anyway, it will correct the issue.
+Yes, slightly. While you should be using **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)** anyway, it will correct the issue.
 
 = Will Internet Explorer conditional comments be removed? =
 
@@ -38,13 +38,17 @@ No.
 
 Probably, however WordPress does a pretty good job of correcting invalid markup. But honestly, it's your job to make sure that your code doesn't suck.
 
+= Will this plugin interfere with my hash-based JavaScript navigation? =
+
+If the links in your HTML are *not* hard-coded as hashes without the use of a script, an issue could occur with URL shortening. If so, setting `$shorten_urls` (on line `26`) to `false` will fix that.
+
 = How do I mark areas that should not be compressed? =
 
 While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically left uncompressed, you can designate any code to be exempted from compression. Simply drop your content between a pair of `<!--wp-html-compression no compression-->` comment tags. A picture is worth a thousand words; so, check the **[screenshots](http://wordpress.org/extend/plugins/wp-html-compression/screenshots/)**.
 
 = How do I compress the contents of &lt;script&gt; tags? =
 
-Until a settings page is created, you'll have to edit the file from the "Plugins" menu in the WordPress admin. Look for the `$compress_js` variable and set it to `true`.
+Until a settings page is created, you'll have to edit the file from the "Plugins" menu in the WordPress admin. Set `$compress_js` on line `26` to `true`.
 
 = Are you or have you thought of using HTML Tidy? =
 
@@ -63,6 +67,12 @@ This plugin has only been tested with versions of WordPress as early as 3.2. For
 
 
 == Changelog ==
+
+= 0.5.1 =
+* Upgraded to **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)** v0.3
+* JavaScript library references with scheme-relative URLs (`//domain.com/`) are no longer broken
+* Canonical URL no longer shortened
+* Minor bug fixes
 
 = 0.5 =
 * Includes **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)** for `action`, `href`, `src` attributes
