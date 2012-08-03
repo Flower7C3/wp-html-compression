@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: WP-HTML-Compression
-Plugin URI: http://www.svachon.com/blog/wp-html-compression/
-Description: Reduce file size by removing all standard comments and unnecessary whitespace from an HTML document.
-Version: 0.5
+Plugin URI: http://www.svachon.com/wp-html-compression/
+Description: Reduce file size by shortening URLs and safely removing all standard comments and unnecessary whitespace from an HTML document.
+Version: 0.5.1
 Author: Steven Vachon
 Author URI: http://www.svachon.com/
 Author Email: prometh@gmail.com
@@ -19,7 +19,7 @@ class WP_HTML_Compression
 	protected $shorten_urls;
 	
 	// Variables
-	protected $html;
+	protected $html = '';
 	
 	
 	
@@ -63,7 +63,9 @@ class WP_HTML_Compression
 	protected function callback_HTML_URLs($matches)
 	{
 		// [2] is an attribute value that is encapsulated with "" and [3] with ''
-		return $matches[1].'="'.absolute_to_relative_url($matches[2].$matches[3]).'"';
+		$url = (!isset($matches[3])) ? $matches[2] : $matches[3];
+		
+		return $matches[1].'="'.absolute_to_relative_url($url).'"';
 	}
 	
 	
@@ -86,6 +88,8 @@ class WP_HTML_Compression
 			
 			$content = $token[0];
 			
+			$relate = false;
+			
 			if (is_null($tag))
 			{
 				if ( !empty($token['script']) )
@@ -102,7 +106,7 @@ class WP_HTML_Compression
 					$strip = $this->compress_css;
 					$relate = true;
 				}
-				else if ($content == '<!--wp-html-compression no compression-->')
+				else if ($content === '<!--wp-html-compression no compression-->')
 				{
 					$overriding = !$overriding;
 					
@@ -111,20 +115,22 @@ class WP_HTML_Compression
 				}
 				else if ($this->remove_comments)
 				{
-					if (!$overriding && $raw_tag != 'textarea')
+					if (!$overriding && $raw_tag !== 'textarea')
 					{
 						// Remove any HTML comments, except MSIE conditional comments
 						$content = preg_replace('/<!--(?!\s*(?:\[if [^\]]+]|<!|>))(?:(?!-->).)*-->/s', '', $content);
+						
+						$relate = true;
 					}
 				}
 			}
 			else	// All tags except script, style and comments
 			{
-				if ($tag == 'pre' || $tag == 'textarea')
+				if ($tag === 'pre' || $tag === 'textarea')
 				{
 					$raw_tag = $tag;
 				}
-				else if ($tag == '/pre' || $tag == '/textarea')
+				else if ($tag === '/pre' || $tag === '/textarea')
 				{
 					$raw_tag = false;
 				}
@@ -134,7 +140,7 @@ class WP_HTML_Compression
 				}
 				else
 				{
-					if ($tag != '')
+					if ($tag !== '')
 					{
 						if (strpos($tag, '/') === false)
 						{
@@ -146,7 +152,15 @@ class WP_HTML_Compression
 						// Remove any space before the end of a tag (including closing tags and self-closing tags)
 						$content = preg_replace('/\s+(\/?\>)/', '$1', $content);
 						
-						$relate = true;
+						// Do not shorten canonical URL
+						if ($tag !== 'link')
+						{
+							$relate = true;
+						}
+						else if (preg_match('/rel=(?:\'|\")\s*canonical\s*(?:\'|\")/i', $content) === 0)
+						{
+							$relate = true;
+						}
 					}
 					else	// Content between opening and closing tags
 					{
