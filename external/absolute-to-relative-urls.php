@@ -3,7 +3,7 @@
 Plugin Name: Absolute-to-Relative URLs
 Plugin URI: http://www.svachon.com/
 Description: A <strong>function</strong> for use in shortening URL links. Just use <code><strong>absolute_to_relative_url</strong>( string <em>$url</em> [, bool <em>$ignore_www</em> = <em>true</em> [, bool <em>$choose_shortest</em> = <em>true</em>]] )</code>.
-Version: 0.3
+Version: 0.3.1
 Author: Steven Vachon
 Author URI: http://www.svachon.com/
 Author Email: prometh@gmail.com
@@ -325,14 +325,6 @@ class Absolute_to_Relative_URLs
 		
 		if ($url !== false)
 		{
-			// #anchor
-			// index.html
-			// /index.html
-			// http://webserver
-			// http://webserver/
-			// http://webserver/index.html
-			// http://webserver/./../index.html
-			
 			if ($init)
 			{
 				// Checks for host to catch "host:80"
@@ -426,8 +418,6 @@ class Absolute_to_Relative_URLs
 			}
 		}
 		
-		// TEMP :: faster to remove from $absolute_path then merge with $relative_path?
-		
 		// Form path
 		foreach ($absolute_path as $i => $dir)
 		{
@@ -451,7 +441,7 @@ class Absolute_to_Relative_URLs
 				1: path-relative URL (../child-of-parent/etc/)
 				2: shortest possible URL (root- or path-relative)
 	*/
-	public function relate_url($url, $ignore_www=true, $output_type=2)
+	public function relate_url($url, $ignore_www=false, $output_type=2)
 	{
 		if ($this->site_url !== false)
 		{
@@ -621,7 +611,7 @@ class Absolute_to_Relative_URLs
 			1: path-relative URL (../child-of-parent/etc/)
 			2: shortest possible URL (root- or path-relative)
 */
-function absolute_to_relative_url($url, $ignore_www=true, $output_type=2)
+function absolute_to_relative_url($url, $ignore_www=false, $output_type=2)
 {
 	global $absolute_to_relative_url_instance;
 	
