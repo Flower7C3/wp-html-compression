@@ -1,12 +1,12 @@
 <?php
 /*
 Plugin Name: WP-HTML-Compression
-Plugin URI: http://www.svachon.com/wp-html-compression/
+Plugin URI: http://www.svachon.com/blog/wp-html-compression/
 Description: Reduce file size by shortening URLs and safely removing all standard comments and unnecessary whitespace from an HTML document.
-Version: 0.5.2
+Version: 0.5.3
 Author: Steven Vachon
 Author URI: http://www.svachon.com/
-Author Email: prometh@gmail.com
+Author Email: contact@svachon.com
 */
 
 class WP_HTML_Compression
@@ -240,7 +240,7 @@ function wp_html_compression_finish($html)
 
 function wp_html_compression_start()
 {
-	if (!is_feed())
+	if (!is_feed() && !is_robots())
 	{
 		ob_start('wp_html_compression_finish');
 	}

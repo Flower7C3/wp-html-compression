@@ -1,11 +1,11 @@
 === WP-HTML-Compression ===
 Author: Steven Vachon
 URL: http://www.svachon.com/
-Contact: prometh@gmail.com
+Contact: contact@svachon.com
 Contributors: prometh
 Tags: absolute, bandwidth, comment, comments, compress, compressed, compression, faster, google, html, link, links, loading, optimize, optimization, minification, minified, minify, performance, plugin, reduction, relative, seo, shorten, speed, space, template, url, urls, whitespace
 Requires at least: 3.2
-Tested up to: 3.4.1
+Tested up to: 3.4.2
 Stable tag: trunk
 
 Reduce file size by shortening URLs and safely removing all standard comments and unnecessary whitespace from an HTML document.
@@ -15,7 +15,7 @@ Reduce file size by shortening URLs and safely removing all standard comments an
 
 Combining HTML "minification" with cache and HTTP compression (**[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)**, or similar) will cut down your bandwidth and ensure near-immediate content delivery while increasing your Google rankings.
 
-This plugin will compress your HTML by shortening **URLs** and removing **standard comments** and **whitespace**; including new lines, carriage returns, tabs and excess spaces. Most importantly, by ignoring `<pre>`, `<textarea>`, `<script>` and Explorer® `conditional comment` tags, ***presentation will not be affected***.
+This plugin will compress your HTML by shortening **URLs** and removing **standard comments** and **whitespace**; including new lines, carriage returns, tabs and excess spaces. Most importantly, by ignoring `<pre>`, `<textarea>`, `<script>` and Explorer `conditional comment` tags, ***presentation will not be affected***.
 
 
 == Installation ==
@@ -30,7 +30,7 @@ This plugin will compress your HTML by shortening **URLs** and removing **standa
 
 Yes, slightly. While you should be using **[WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/)** anyway, it will correct the issue.
 
-= Will Internet Explorer® conditional comments be removed? =
+= Will Internet Explorer conditional comments be removed? =
 
 No.
 
@@ -41,10 +41,6 @@ Probably, however WordPress does a pretty good job of correcting invalid markup.
 = Will this plugin interfere with my hash-based JavaScript navigation? =
 
 If the links in your HTML are *not* hard-coded as hashes without the use of a script, an issue could occur with URL shortening. If so, setting `$shorten_urls` (on line `26`) to `false` will fix that.
-
-= Does this plugin use URL shortening services like TinyURL? =
-
-No, it comes with one of my other plugins, **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)**. Check it out for some examples.
 
 = How do I mark areas that should not be compressed? =
 
@@ -71,6 +67,10 @@ This plugin has only been tested with versions of WordPress as early as 3.2. For
 
 
 == Changelog ==
+
+= 0.5.3 =
+* Bypasses compression for robots.txt
+* Corrected "invalid plugin header" issue when activating from install screen
 
 = 0.5.2 =
 * Upgraded to **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)** v0.3.1
