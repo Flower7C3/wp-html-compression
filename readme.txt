@@ -48,7 +48,7 @@ This is totally fine and actually intentional. It's standard and will not cause 
 
 = Why does my compressed HTML have a space between most tags? =
 
-To preserves *rendered* whitespace. One or more line breaks in your markup are rendered as a single space in a web browser. Visual discrepancies would occur if those line breaks were not converted to at least one space.
+To preserve *rendered* whitespace. One or more line breaks in your markup are rendered as a single space in a web browser. Visual discrepancies would occur if those line breaks were not converted to at least one space.
 
 = How do I mark areas that should not be compressed? =
 
