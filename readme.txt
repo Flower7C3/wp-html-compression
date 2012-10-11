@@ -42,6 +42,14 @@ Probably, however WordPress does a pretty good job of correcting invalid markup.
 
 If the links in your HTML are *not* hard-coded as hashes without the use of a script, an issue could occur with URL shortening. If so, setting `$shorten_urls` (on line `26`) to `false` will fix that.
 
+= My URLs have the "http:" and/or "https:" stripped?? =
+
+This is totally fine and actually intentional. It's standard and will not cause 404s nor get in the way of your SEO, but it *will* lower file size! You might be interested in reading more about this technique, called **[scheme-relative URLs](http://paulirish.com/2010/the-protocol-relative-url/)**.
+
+= Why does my compressed HTML have a space between most tags? =
+
+To preserves *rendered* whitespace. One or more line breaks in your markup are rendered as a single space in a web browser. Visual discrepancies would occur if those line breaks were not converted to at least one space.
+
 = How do I mark areas that should not be compressed? =
 
 While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically left uncompressed, you can designate any code to be exempted from compression. Simply drop your content between a pair of `<!--wp-html-compression no compression-->` comment tags. A picture is worth a thousand words; so, check the **[screenshots](http://wordpress.org/extend/plugins/wp-html-compression/screenshots/)**.
