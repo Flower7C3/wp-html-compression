@@ -60,7 +60,7 @@ While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically le
 
 = How do I compress the contents of &lt;script&gt; tags? =
 
-Until a settings page is created, you'll have to edit the file from the "Plugins" menu in the WordPress admin. Set `$compress_js` on line `21` of *libs/html-minify.php* to `true`.
+Until a settings page is created, you'll have to edit the file from the "Plugins" menu in the WordPress admin. Set `$compress_js` on line `21` of *libs/html-minify.php* to `true`. **This is not recommended** as this plugin is not yet ready to compression inline scripts.
 
 = Are you or have you thought of using HTML Tidy? =
 
