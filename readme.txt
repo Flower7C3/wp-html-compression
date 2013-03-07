@@ -34,6 +34,10 @@ Yes, slightly. While you should be using **[WP Super Cache](http://wordpress.org
 
 No.
 
+= Is this plugin HTML5-compatible? =
+
+Yes.
+
 = Will having invalid HTML cause an issue? =
 
 Probably, however WordPress does a pretty good job of correcting invalid markup. But honestly, it's your job to make sure that your code doesn't suck.
@@ -75,6 +79,11 @@ This plugin has only been tested with versions of WordPress as early as 3.2. For
 
 
 == Changelog ==
+
+= 0.5.4 =
+* Plugin should always load now, even for installations that seem to skip the execution of `template_redirect` (?)
+* Converted for use in standard PHP as **[HTML Minify](http://www.svachon.com/blog/html-minify/)**, for which this plugin now simply wraps
+* Compression statistics comment disabled by default
 
 = 0.5.3 =
 * Bypasses compression for robots.txt
