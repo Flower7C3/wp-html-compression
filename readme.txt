@@ -5,7 +5,7 @@ Contact: contact@svachon.com
 Contributors: prometh
 Tags: absolute, bandwidth, comment, comments, compress, compressed, compression, faster, google, html, link, links, loading, optimize, optimization, minification, minified, minify, performance, plugin, reduction, relative, seo, shorten, speed, space, template, url, urls, whitespace
 Requires at least: 3.2
-Tested up to: 3.4.2
+Tested up to: 3.5.1
 Stable tag: trunk
 
 Reduce file size by shortening URLs and safely removing all standard comments and unnecessary whitespace from an HTML document.
@@ -44,7 +44,7 @@ Probably, however WordPress does a pretty good job of correcting invalid markup.
 
 = Will this plugin interfere with my hash-based JavaScript navigation? =
 
-If the links in your HTML are *not* hard-coded as hashes without the use of a script, an issue could occur with URL shortening. If so, setting `$shorten_urls` (on line `26`) to `false` will fix that.
+If the links in your HTML are *not* hard-coded as hashes without the use of a script, an issue could occur with URL shortening. If so, setting `$shorten_urls` on line `21` of *libs/html-minify.php* to `false` will fix that.
 
 = My URLs have the "http:" and/or "https:" stripped?? =
 
@@ -60,7 +60,7 @@ While &lt;pre&gt;, &lt;textarea&gt; and &lt;script&gt; tags are automatically le
 
 = How do I compress the contents of &lt;script&gt; tags? =
 
-Until a settings page is created, you'll have to edit the file from the "Plugins" menu in the WordPress admin. Set `$compress_js` on line `26` to `true`.
+Until a settings page is created, you'll have to edit the file from the "Plugins" menu in the WordPress admin. Set `$compress_js` on line `21` of *libs/html-minify.php* to `true`.
 
 = Are you or have you thought of using HTML Tidy? =
 
