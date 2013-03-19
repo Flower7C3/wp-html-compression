@@ -230,7 +230,7 @@ function html_minify_buffer($html)
 
 
 
-ob_start('html_minify_buffer');
+//ob_start('html_minify_buffer');
 
 
 

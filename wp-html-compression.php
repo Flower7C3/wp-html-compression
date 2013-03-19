@@ -3,7 +3,7 @@
 Plugin Name: WP-HTML-Compression
 Plugin URI: http://www.svachon.com/blog/html-minify/
 Description: Reduce file size by shortening URLs and safely removing all standard comments and unnecessary whitespace from an HTML document.
-Version: 0.5.5
+Version: 0.5.5.1
 Author: Steven Vachon
 Author URI: http://www.svachon.com/
 Author Email: contact@svachon.com
