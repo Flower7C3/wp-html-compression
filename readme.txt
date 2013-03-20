@@ -87,7 +87,7 @@ This plugin has only been tested with versions of WordPress as early as 3.2. For
 * Upgraded to **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)** v0.3.2
 * Data URIs are no longer invalidated by the URL shortener
 * URL shortener now applied to `data` attribute values (common to `<object>`)
-* Original, unaltered markup is served if found to be invalid
+* Minor bug prevention
 
 = 0.5.4.2 =
 * PHP errors hidden if/when plugin file is accessed directly
