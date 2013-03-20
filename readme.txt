@@ -80,6 +80,11 @@ This plugin has only been tested with versions of WordPress as early as 3.2. For
 
 == Changelog ==
 
+= 0.5.6 =
+* Upgraded to **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)** v0.3.3
+* Javascript URIs are no longer invalidated by the URL shortener
+* Minor cleanup
+
 = 0.5.5.1 =
 * Oops, minor slip-up
 
