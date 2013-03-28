@@ -80,9 +80,14 @@ This plugin has only been tested with versions of WordPress as early as 3.2. For
 
 == Changelog ==
 
+= 0.5.7 =
+* Upgraded to **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)** v0.3.4
+* Empty, hash-only anchors (`"#"`) are no longer invalidated by the URL shortener
+* Bypasses compression for **[Humans TXT](http://wordpress.org/extend/plugins/humanstxt/)** output
+
 = 0.5.6 =
 * Upgraded to **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)** v0.3.3
-* Javascript URIs are no longer invalidated by the URL shortener
+* Javascript URIs (`"javascript:"`) are no longer invalidated by the URL shortener
 * Minor cleanup
 
 = 0.5.5.1 =
@@ -90,7 +95,7 @@ This plugin has only been tested with versions of WordPress as early as 3.2. For
 
 = 0.5.5 =
 * Upgraded to **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)** v0.3.2
-* Data URIs are no longer invalidated by the URL shortener
+* Data URIs (`"data:"`) are no longer invalidated by the URL shortener
 * URL shortener now applied to `data` attribute values (common to `<object>`)
 * Minor bug prevention
 
