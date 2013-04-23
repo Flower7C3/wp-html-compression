@@ -80,6 +80,9 @@ This plugin has only been tested with versions of WordPress as early as 3.2. For
 
 == Changelog ==
 
+= 0.5.8 =
+* URLs within `<script>` and `<style>` tags are no longer shortened unless compression on such tags has been enabled
+
 = 0.5.7 =
 * Upgraded to **[Absolute-to-Relative URLs](http://wordpress.org/extend/plugins/absolute-to-relative-urls/)** v0.3.4
 * Empty, hash-only anchors (`"#"`) are no longer invalidated by the URL shortener
