@@ -105,6 +105,10 @@ class HTML_Minify
 					// Gets Shortened:   test.href="http://domain.com/wp"+"-content";
 					// Gets Bypassed:    test.href = "http://domain.com/wp"+"-content";
 					$relate = $this->compress_js;
+                                        if($this->compress_js === true){
+                                                $content = preg_replace('~//<!\[CDATA\[\s*|\s*//\]\]>~', '', $content);
+                                                $content = preg_replace('/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\)\/\/[^"\'].*))/', '', $content);
+                                        }
 				}
 				else if ( !empty($token['style']) )
 				{
@@ -214,24 +218,3 @@ class HTML_Minify
 		return $html;
 	}
 }
-
-
-
-function html_minify_buffer($html)
-{
-	// Duplicate library may be in use elsewhere
-	if (!function_exists('absolute_to_relative_url'))
-	{
-		require_once 'absolute-to-relative-urls.php';
-	}
-	
-	return new HTML_Minify($html);
-}
-
-
-
-//ob_start('html_minify_buffer');
-
-
-
-?>
